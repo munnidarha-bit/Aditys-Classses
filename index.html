@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="hi">
+<head>
+    <!-- Favicon (Browser Tab & Google Preview) -->
+<link rel="icon" type="image/png" href="https://munnidarha-bit.github.io/Aditys-Classses/logo.png">
+
+<!-- Schema.org Structured Data for Logo -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Aditya Classes",
+  "url": "https://munnidarha-bit.github.io/Aditys-Classses/",
+  "logo": "https://munnidarha-bit.github.io/Aditys-Classses/logo.png",
+  "sameAs": [
+    "https://www.youtube.com/@AdityaClasses",
+    "https://www.instagram.com/adityaclasses",
+    "https://www.facebook.com/adityaclasses"
+  ]
+}
+</script>
+  <meta name="title" content="Aditya Classes - Live Online Learning Platform">
+<meta name="description" content="Aditya Classes is an online learning platform for students to attend live classes, interact with teachers, and learn subjects easily. Join Aditya Classes for smart, interactive, and real-time education.">
+<meta name="keywords" content="Aditya Classes, online classes, live learning, e-learning, school classes, study online, live education, teacher student interaction, Aditya online study, best online classes, Aditya Yadav classes">
+<meta name="author" content="Aditya Yadav">
+<meta name="robots" content="index, follow">
+<meta name="language" content="English">
+<meta name="revisit-after" content="7 days">
+<meta property="og:image" content="https://munnidarha-bit.github.io/Aditys-Classses/logo.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://munnidarha-bit.github.io/Aditys-Classses/logo.png">
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aditya Classes — Live</title>
+  <style>
+    :root{--accent:#0b74de;--bg:#f6f8fb;--card:#fff;--muted:#6b7280}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:var(--bg);margin:0;color:#0b1220}
+    .wrap{max-width:1000px;margin:18px auto;padding:16px}
+    header{display:flex;justify-content:space-between;align-items:center}
+    h1{margin:0;font-size:1.4rem}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:16px;margin-top:14px}
+    .card{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 8px 30px rgba(2,6,23,0.06)}
+    .video{height:480px;border-radius:8px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center}
+    iframe{width:100%;height:100%;border:0}
+    .chat{display:flex;flex-direction:column;height:480px}
+    #messages{flex:1;overflow:auto;padding:8px;border-radius:8px;background:#fbfdff;border:1px solid #e6eef9}
+    .msg{padding:8px;border-radius:8px;margin-bottom:8px;background:linear-gradient(180deg,#fff,#f7fbff)}
+    .meta{font-size:0.82rem;color:var(--muted);margin-bottom:6px}
+    .controls{display:flex;gap:8px;align-items:center}
+    input[type=text]{padding:8px;border:1px solid #dde8fb;border-radius:8px}
+    button{background:var(--accent);color:white;padding:8px 10px;border-radius:8px;border:0;cursor:pointer}
+    button.secondary{background:#334155}
+    .notice{color:#9ca3af;font-size:0.95rem;margin-top:8px}
+    .small{font-size:0.9rem;color:var(--muted)}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}.video{height:320px}.chat{height:320px}}
+    /* modal */
+    .modal-bg{position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(2,6,23,0.45);display:none;align-items:center;justify-content:center}
+    .modal{background:white;padding:16px;border-radius:10px;max-width:420px;width:92%}
+    label{display:block;margin-top:8px;font-size:0.9rem;color:#1f2937}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Aditya Classes — Live</h1>
+      <div class="small">Powered by Aditya Aryan</div>
+    </header>
+
+    <div class="grid">
+      <!-- Video area -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <strong>Live Class</strong>
+          <div class="controls">
+            <button id="teacherBtn" class="secondary">Teacher Control</button>
+          </div>
+        </div>
+
+        <div style="margin-top:10px" class="video" id="videoArea">
+          <iframe id="ytFrame"
+            src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID?autoplay=0"
+            title="Aditya Classes Live"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+
+        <div class="notice small">
+          Tip: Start your YouTube Live from YouTube Studio. Then refresh this page so the live embed shows the stream.
+        </div>
+      </div>
+
+      <!-- Chat area -->
+      <aside class="card chat">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <strong>Live Chat</strong>
+          <div class="small" id="chatStatus">Comment here.....</div>
+        </div>
+
+        <div id="messages" aria-live="polite"></div>
+
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <input id="nameInput" type="text" placeholder="Your name (optional)" />
+          <input id="msgInput" type="text" placeholder="Type your message" style="flex:1" />
+          <button id="sendBtn">Send</button>
+        </div>
+
+        <div class="notice" id="disabledNotice" style="display:none;margin-top:8px;color:#ef4444"></div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Modal for teacher login & toggle -->
+  <div class="modal-bg" id="modalBg">
+    <div class="modal card">
+      <h3 style="margin:0">Teacher Control</h3>
+      <p class="small">Enter teacher ID, password and username to toggle comments.</p>
+
+      <label>Teacher ID</label>
+      <input id="tId" type="text">
+
+      <label>Teacher Password</label>
+      <input id="tPass" type="password">
+
+      <label>Your Username (this name will show as toggler)</label>
+      <input id="tName" type="text" placeholder="Aditya ">
+
+      <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end">
+        <button id="closeModal" class="secondary">Cancel</button>
+        <button id="toggleCommentsBtn">Toggle Comments</button>
+      </div>
+
+      <div id="modalMsg" class="small" style="margin-top:10px;color:#ef4444"></div>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+
+  <script>
+    /*********** CONFIGURE THESE ***********/
+    const YOUTUBE_VIDEO_ID = "YOUR_YOUTUBE_VIDEO_ID";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCrhfiYgl4tx0zpkLA_IKGLB640u1NEGZ0",
+      authDomain: "aditya-classes-67783.firebaseapp.com",
+      projectId: "aditya-classes-67783",
+      storageBucket: "aditya-classes-67783.appspot.com",
+      messagingSenderId: "830914766455",
+      appId: "1:830914766455:web:7b28bf4fdfdb8d54be0872"
+    };
+
+    const TEACHER_ID = "aditya_teacher";
+    const TEACHER_PASSWORD = "Aditya@123";
+    /****************************************/
+
+    document.getElementById('ytFrame').src = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=0`;
+
+    function esc(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+    try {
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+      const chatRef = db.ref('aditya-classes/chat');
+      const settingsRef = db.ref('aditya-classes/settings');
+
+      const messagesEl = document.getElementById('messages');
+      const nameInput = document.getElementById('nameInput');
+      const msgInput = document.getElementById('msgInput');
+      const sendBtn = document.getElementById('sendBtn');
+      const chatStatus = document.getElementById('chatStatus');
+      const disabledNotice = document.getElementById('disabledNotice');
+
+      let commentsEnabled = true;
+
+      settingsRef.child('commentsEnabled').on('value', snap => {
+        const v = snap.val();
+        commentsEnabled = (v === null) ? true : !!v;
+        updateChatState();
+      });
+
+      settingsRef.on('value', snap => {
+        const s = snap.val() || {};
+        if(s.lastToggledBy){
+          chatStatus.textContent = commentsEnabled ? `Comments ON — last by ${s.lastToggledBy}` : `Comments OFF — last by ${s.lastToggledBy}`;
+        }else{
+          chatStatus.textContent = commentsEnabled ? 'Comments ON' : 'Comments OFF';
+        }
+      });
+
+      chatRef.limitToLast(200).on('child_added', snapshot => {
+        const data = snapshot.val();
+        appendMessage(data);
+      });
+
+      function appendMessage(data){
+        const who = esc(data.name || 'Student');
+        const text = esc(data.message || '');
+        const time = (data.time) ? new Date(data.time).toLocaleTimeString() : '';
+        const el = document.createElement('div');
+        el.className = 'msg';
+        el.innerHTML = `<div class="meta"><strong>${who}</strong> <span style="margin-left:8px;color:var(--muted);font-size:0.85rem">${time}</span></div><div>${text}</div>`;
+        messagesEl.appendChild(el);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      sendBtn.addEventListener('click', sendMessage);
+      msgInput.addEventListener('keydown', (e)=> { if(e.key === 'Enter') sendMessage(); });
+
+      function sendMessage(){
+        if(!commentsEnabled){
+          showDisabledNotice('Comments are turned OFF by the teacher.');
+          return;
+        }
+        const name = (nameInput.value || 'Student').trim();
+        const msg = (msgInput.value || '').trim();
+        if(!msg) return;
+        chatRef.push({ name: name, message: msg, time: Date.now() })
+          .then(()=> { msgInput.value = ''; })
+          .catch(err => { alert('Failed to send: '+err.message); });
+      }
+
+      function updateChatState(){
+        if(commentsEnabled){
+          sendBtn.disabled = false;
+          msgInput.disabled = false;
+          disabledNotice.style.display = 'none';
+        }else{
+          sendBtn.disabled = true;
+          msgInput.disabled = true;
+          disabledNotice.style.display = 'block';
+          disabledNotice.textContent = 'Comments are turned OFF by the teacher.';
+        }
+      }
+
+      function showDisabledNotice(msg){
+        disabledNotice.style.display = 'block';
+        disabledNotice.textContent = msg;
+        setTimeout(()=>{ if(!commentsEnabled) disabledNotice.style.display='block'; else disabledNotice.style.display='none'; }, 3000);
+      }
+
+      const modalBg = document.getElementById('modalBg');
+      const teacherBtn = document.getElementById('teacherBtn');
+      const closeModal = document.getElementById('closeModal');
+      const toggleBtn = document.getElementById('toggleCommentsBtn');
+      const tId = document.getElementById('tId');
+      const tPass = document.getElementById('tPass');
+      const tName = document.getElementById('tName');
+      const modalMsg = document.getElementById('modalMsg');
+
+      teacherBtn.addEventListener('click', openModal);
+      closeModal.addEventListener('click', closeModalFn);
+      modalBg.addEventListener('click', (e)=>{ if(e.target === modalBg) closeModalFn(); });
+
+      function openModal(){
+        modalMsg.textContent = '';
+        tId.value = '';
+        tPass.value = '';
+        tName.value = '';
+        modalBg.style.display = 'flex';
+      }
+      function closeModalFn(){ modalBg.style.display = 'none'; }
+
+      toggleBtn.addEventListener('click', async ()=> {
+        modalMsg.textContent = '';
+        const id = (tId.value||'').trim();
+        const pass = (tPass.value||'').trim();
+        const uname = (tName.value||'').trim() || 'Teacher';
+
+        if(id !== TEACHER_ID || pass !== TEACHER_PASSWORD){
+          modalMsg.textContent = 'Teacher ID or Password is wrong.';
+          return;
+        }
+
+        const newVal = !commentsEnabled;
+        try{
+          await settingsRef.update({
+            commentsEnabled: newVal,
+            lastToggledBy: uname,
+            lastToggledAt: Date.now()
+          });
+          const sysMsg = newVal ? `${uname} ने comments को ON किया` : `${uname} ने comments को OFF किया`;
+          await chatRef.push({ name: 'System', message: sysMsg, time: Date.now() });
+          closeModalFn();
+        }catch(err){
+          modalMsg.textContent = 'Error: ' + err.message;
+        }
+      });
+    } catch(e){
+      console.error('Firebase init failed', e);
+      alert('Firebase initialize failed — कृपया firebaseConfig सही डालें और console देखें।');
+    }
+  </script>
+</body>
+</html>
